@@ -5,13 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>指令，事件，语法糖</title>
 </head>
 
 <body>
+    <div id="app">
+        <span v-text="apple"></span>
+        <p v-html="apple">{{banana}}</p>
+        <!-- v-bind 绑定动态元素属性 -->
+        <p :class=className></p>
+
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
     <script>
         //https://cn.vuejs.org/v2/guide/syntax.html 模板语法
+        var app = new Vue({
+            el: '#app',
+            data: {
+                apple: '苹果',
+                banana: '<span style="color:yellow">香蕉</span>',
+                className: 'active'
+            },
+        });
     </script>
 </body>
 
