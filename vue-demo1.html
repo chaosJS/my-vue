@@ -15,6 +15,20 @@
         <!-- v-bind 绑定动态元素属性 -->
         <p :class=className></p>
 
+        <p>{{text}}</p>
+
+        <p>计算属性:{{reverseStr}}</p>
+
+        <p>总价格:{{prices}}</p>
+        <hr>
+        <p>{{fullName}}</p>
+
+        <input type="text" name="" id="xxxx">
+        <button @click="setName"> set</button>
+        <hr> 缓存
+        <p>{{now}} 计算属性是基于它们的依赖进行缓存的。只在相关依赖发生改变时它们才会重新求值</p>
+        <p>method时间戳：：：{{getNow()}} ---每当触发重新渲染时，调用方法将总会再次执行函数。</p>
+        <button @click="checkCache">验证计算属性缓存</button>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
     <script>
@@ -24,9 +38,79 @@
             data: {
                 apple: '苹果',
                 banana: '<span style="color:yellow">香蕉</span>',
-                className: 'active'
+                className: 'active',
+                text: '123,456,789',
+                cart1: [
+                    {
+                        name: 'apple',
+                        price: 100,
+                        count: 2
+                    }, {
+                        name: 'pad',
+                        price: 200,
+                        count: 1
+                    }
+                ],
+                cart2: [
+                    {
+                        name: 'orange',
+                        price: 10,
+                        count: 3
+                    }, {
+                        name: 'banana',
+                        price: 20,
+                        count: 4
+                    }
+                ],
+                firstName: 'li',
+                lastName: 'chao',
             },
+            methods: {
+                setName: function () {
+                    let newValue = document.getElementById('xxxx').value;
+                    app.fullName = newValue;
+                },
+                getNow: function () {
+                    //
+                    return Date.now()
+                },
+                checkCache: function () {
+                    setInterval(() => {
+                        this.apple = Math.random()
+                    }, 1000)
+                }
+            },
+            //计算属性：
+            computed: {
+                reverseStr: function () {
+                    return this.text.split(',').reverse().join(',')
+                },
+                prices: function () {
+                    let all = 0;
+                    this.cart1.concat(this.cart2).map((info) => {
+                        all += info.price * info.count
+                    })
+
+                    return all + "---" + this.text;
+                },
+                fullName: {
+                    get: function () {
+                        return this.firstName + ' ' + this.lastName
+                    },
+                    set: function (newName) {
+                        let names = newName.split(' ');
+                        this.firstName = names[0];
+                        this.lastName = names[1];
+                    }
+                },
+                now: function () {
+                    return Date.now();
+                }
+
+            }
         });
+
+
     </script>
 </body>
 
