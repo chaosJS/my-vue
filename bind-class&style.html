@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>watch及其他</title>
+</head>
+
+<body>
+    <style>
+        div {
+            width: 400px;
+        }
+
+        .active {
+            height: 100px;
+            background: #999;
+        }
+
+        .redBorder {
+            border-bottom: 2px solid red;
+        }
+
+        .blueBorder {
+            border-bottom: 2px solid blue;
+
+
+        }
+    </style>
+    <div id="watch-example">
+
+        <div :class={active:isActive,redBorder:redBorder,blueBorder:blueBorder}>绑定class 对象</div>
+        <button @click="toggle">点击</button>
+
+        <div :class="computedClass">绑定class 对象 计算属性</div>
+
+        <hr>
+        <div :class=[activeClass,errClass]>绑定class 数组,数组成员直接对应的是class名</div>
+
+        <hr>
+        <div :class=[computedClass,errClass,{basicFont:basicFont}]>绑定class对象和 数组混用</div>
+
+
+        <br>
+        <br>
+
+        <div :style="{ color:colorType, 'font-weight':boldSize}">绑定内联样式 对象</div>
+        <div :style="styleObj">绑定内联 样式对象通常更好</div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script>
+
+        var watchExampleVM = new Vue({
+            el: '#watch-example',
+            data: {
+                isActive: true,
+                redBorder: true,
+                blueBorder: false,
+                activeClass: 'isActive',
+                errClass: 'error',
+                basicFont: true,
+
+                colorType: 'red',
+                boldSize: 'bold',
+
+                styleObj: {
+                    color: 'red',
+                    'font-weight': 'bold',
+                }
+
+            },
+
+            methods: {
+                toggle: function () {
+                    this.redBorder = !this.redBorder;
+                    this.blueBorder = !this.blueBorder;
+                }
+            },
+            computed: {
+                computedClass: function () {
+                    return {
+                        isActive: true,
+                        blueBorder: true
+                    }
+                }
+            }
+        })
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
