@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>内置指令</title>
+</head>
+<style>
+    [v-cloak] {
+        display: none;
+    }
+</style>
+
+<body>
+
+    <div id="watch-example">
+        <p v-cloak> {{msg}}
+            <br> v-cloak:初始化慢导致页面闪动的最佳实践：在vue实例编译结束后渲染，与display:none结合
+        </p>
+        <hr>
+        <p v-once>
+            v-once:只渲染最初值一次，后续怎么改都不起作用
+            <br> {{oneData}}
+            <br>
+            <button @click="handleClick">点击</button>
+        </p>
+        <hr>
+        <h3>v-if v-else 会尽可能复用已有元素而不是重新渲染，配合key属性避免</h3>
+        <div v-if="type==='name'">
+            用户名
+            <input type="text" name="name" placeholder="用户名" key="name">
+        </div>
+
+        <div v-else>
+            邮箱
+            <input type="text" name="email" placeholder="邮箱" key="email">
+            </label>
+        </div>
+        <button @click="toggleType">toggleType</button>
+        <hr>
+        <p v-show="false">
+            v-if 和v-show区别:是否渲染了，v-show只改变了display属性
+
+        </p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script>
+
+        var watchExampleVM = new Vue({
+            el: '#watch-example',
+            data: {
+                msg: 'asdasdasd',
+                oneData: '11111',
+                type: 'name'
+            },
+            methods: {
+                handleClick: function () {
+                    //点击没用
+                    this.oneData = "asdasdsad";
+                },
+                toggleType: function (e) {
+                    //如果方法中带有参数，在html中调用时不加括号，默认传原生事件对象
+                    console.log(e)
+                    this.type = this.type === 'name' ? 'password' : 'name'
+                }
+            }
+
+        })
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

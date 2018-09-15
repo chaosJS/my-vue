@@ -24,7 +24,7 @@
         <p>{{fullName}}</p>
 
         <input type="text" name="" id="xxxx">
-        <button @click="setName"> set</button>
+        <button @click="getNow"> set</button>
         <hr> 缓存
         <p>{{now}} 计算属性是基于它们的依赖进行缓存的。只在相关依赖发生改变时它们才会重新求值</p>
         <p>method时间戳：：：{{getNow()}} ---每当触发重新渲染时，调用方法将总会再次执行函数。</p>
