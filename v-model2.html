@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-model-officials</title>
+</head>
+
+<body>
+
+    <div id="watch-example">
+        <input v-model="message" placeholder="edit me">
+        <p>Message is: {{ message }}</p>
+
+        <p>复选框</p>
+        <input type="checkbox" id="checkbox" v-model="checked">
+        <label for="checkbox">{{ checked }}</label>
+
+        <select v-model="selected">
+            <option v-for="option in options" v-bind:value="option.value">
+                {{ option.text }}
+            </option>
+        </select>
+        <span>Selected: {{ selected }}</span>
+
+        <p>值绑定:</p>
+
+        <input type="checkbox" v-model="toggle" true-value="yes" false-value="no"> {{toggle}}
+        <p>值绑定，单选按钮</p>
+
+        <input type="radio" v-model="pick" :value="fruit"> {{pick}}---{{fruit}}
+
+        <p>值绑定，选择框的选项</p>
+
+        <select v-model="selected2">
+            <!-- 内联对象字面量 -->
+            <option :value="obj">123</option>
+        </select>
+        {{selected2}}
+
+
+        <input v-model.lazy="msg" @change="handleChange">
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script>
+
+        var watchExampleVM = new Vue({
+            el: '#watch-example',
+            data: {
+                message: '',
+                checked: false,
+                selected: 'A',
+                options: [
+                    { text: 'One', value: 'A' },
+                    { text: 'Two', value: 'B' },
+                    { text: 'Three', value: 'C' }
+                ],
+                toggle: '',
+                pick: '123',
+                fruit: 'apple',
+                obj: {
+                    number: 789
+                },
+                selected2: '',
+                msg: '231'
+            },
+            methods: {
+                handleChange: function () {
+                    alert(e)
+                }
+            }
+
+        })
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

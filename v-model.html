@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-model</title>
+</head>
+
+<body>
+
+    <div id="watch-example">
+        <input type="text" name="" id="" v-model="value" value="1231241">
+        <br> {{value}}
+
+        <hr>
+        <textarea name="" id="" cols="30" rows="10" v-model="desc">123123</textarea> {{desc}}
+
+        <hr>
+        <label>
+            男
+            <input type="radio" name="" id="" v-model="gender" value="male">
+        </label>
+        {{gender}}
+
+        <hr>
+        <label>
+            apple
+            <input type="radio" name="fruit" id="" value="apple" v-model="type">
+        </label>
+        <label>
+            pine
+            <input type="radio" name="fruit" id="" value="pine" v-model="type">
+        </label>
+        <br> 选中的是：
+        <br>
+        <input type="text" v-model="type">
+        <hr>
+
+        <input type="checkbox" name="qwe" id="" v-model="klass" value="一年级">
+        <input type="checkbox" name="qwe" id="" v-model="klass" value="二年级">
+        <input type="checkbox" name="qwe" id="" v-model="klass" value="三年级">
+        <br> {{ klass}}
+
+
+        <hr>值绑定
+        <input type="radio" v-model="picked" value="a">---{{picked}}
+
+        <!-- `toggle` 为 true 或 false -->
+        <input type="checkbox" v-model="toggle">---{{toggle}}
+
+        <!-- 当选中第一个选项时，`selected` 为字符串 "abc" -->
+        <select v-model="selected">
+            <option value="abc">ABC</option>
+        </select>
+        ---{{selected}}
+
+        <hr>
+        <input type="checkbox" v-model="toggle1" true-value="123" false-value="345">
+        <br> {{toggle1}}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script>
+
+        var watchExampleVM = new Vue({
+            el: '#watch-example',
+            data: {
+                value: '',
+                desc: '显示的值只依赖所绑定的数据',
+                gender: '',
+                type: '',
+                klass: [],
+
+
+                picked: [],
+                toggle: null,
+                selected: [],
+                toggle1: ''
+            },
+            methods: {
+
+            }
+
+        })
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
