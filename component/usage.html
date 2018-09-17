@@ -8,17 +8,53 @@
     <title>Document</title>
 </head>
 <div id="app">
+    <my-comp></my-comp>
+    <my-comp></my-comp>
+    <hr>
 
+    <blog-post v-for="post in posts" :title="post.title" :id="post.id" :key="post.id"></blog-post>
 </div>
 
 <body>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
     <script>
+        Vue.component('blog-post', {
+            props: ['title', 'id'],
+            template: `<h3>{{id}}---{{title}}</h3>`
+        })
         var app = new Vue({
             el: '#app',
             data: {
-
+                posts: [
+                    { id: 1, title: 'My journey with Vue' },
+                    { id: 2, title: 'Blogging with Vue' },
+                    { id: 3, title: 'Why Vue is so fun' }
+                ],
             },
+            components: {
+                'my-comp': {
+                    template: `
+                    <div>
+                    app局部组件
+                        <button @click="plus">{{count}}</button>
+                    </div>
+                    `,
+                    // 组件名小写字母加中划线
+                    //template中的内容要在一个dom元素中
+                    //组件中    的其他选项：data,computed,methods等
+                    //data必须是一个方法：
+                    data: function () {
+                        return {
+                            count: 0
+                        }
+                    },
+                    methods: {
+                        plus: function () {
+                            this.count += 1
+                        }
+                    }
+                }
+            }
         });
     </script>
 </body>
