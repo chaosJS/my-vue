@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义事件</title>
+</head>
+<div id="app">
+    1. 始终使用 中划线 的事件名。
+    <hr>
+    <base-checkbox v-model="lovingVue"></base-checkbox>
+    <p>{{lovingVue}}</p>
+    <base-input :label="xxlabel"></base-input>
+    <hr> 子组件更新了title，可以用：this.$emit('update:title', newTitle)方法，
+    <br> 父组件监听update:title事件，更新本地title数据： v-on:update:title="doc.title = $event"，简写：v-bind:title.sync="doc.title"
+    <br> 用一个对象同时设置多个 prop 的时候，也可以将这个 .sync 修饰符和 v-bind 配合使用： v-bind.sync="doc"
+</div>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script>
+
+        Vue.component('base-input', {
+            inheritAttrs: false,
+            props: ['label', 'value'],
+            computed: {
+                inputListeners: function () {
+                    var vm = this
+                    // `Object.assign` 将所有的对象合并为一个新对象
+                    return Object.assign({},
+                        // 我们从父级添加所有的监听器
+                        this.$listeners,
+                        // 然后我们添加自定义监听器，
+                        // 或覆写一些监听器的行为
+                        {
+                            // 这里确保组件配合 `v-model` 的工作
+                            input: function (event) {
+                                vm.$emit('input', event.target.value)
+                            }
+                        }
+                    )
+                }
+            },
+            template: `
+                <label>
+                {{ label }}
+                <input
+                    v-bind="$attrs"
+                    v-bind:value="value"
+                    v-on="inputListeners"
+                >
+                </label>
+            `
+        })
+        Vue.component('base-checkbox', {
+            model: {
+                prop: 'checked',
+                event: 'change111'
+            },
+            props: {
+                checked: Boolean
+            },
+            template: `
+                <input
+                type="checkbox"
+                v-bind:checked="checked"
+                v-on:change="$emit('change111', $event.target.checked)"
+                >
+            `
+        })
+        var app = new Vue({
+            el: '#app',
+            data: {
+                lovingVue: false,
+                xxlabel: 'name'
+            },
+
+        });
+    </script>
+</body>
+
+</html>
