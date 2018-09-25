@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>slot的使用</title>
+</head>
+<div id="app">
+    <child-comp>{{msg}}</child-comp>
+
+    <hr> 具名插槽
+    <name-comp>
+        <h2 slot="title">标题信息</h2>
+        <p>文章内容信息</p>
+        <p slot="footer">文章底部信息</p>
+    </name-comp>
+</div>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script>
+        Vue.component('child-comp', {
+            template: `
+            <div>
+                <slot>
+                    <button @click="plus">触发</button>
+                    <!--把整个<slot></slot>提换为<child-comp></child-comp>中间的东西-->
+                </slot>
+            </div>
+            `,
+            data: function () {
+                return {
+
+                }
+            },
+            methods: {
+                plus: function () {
+                    this.$root.eventHub.$emit('xxx', this.count, this.$parent.yyy);
+                    console.log(this.$parent.yyy)
+                },
+
+            }
+        });
+
+        Vue.component('name-comp', {
+            template: `
+            <div class="xxxxxxxxxxx">
+                <slot name="title">
+                    
+                </slot>
+                <slot></slot>
+                <slot>
+                        不要多写slot
+                        Duplicate presence of slot "default" found in the same render tree
+                </slot>                
+                <slot name="footer"></slot>
+            </div>
+            `,
+            data: function () {
+                return {
+
+                }
+            },
+            methods: {
+                plus: function () {
+                    this.$root.eventHub.$emit('xxx', this.count, this.$parent.yyy);
+                    console.log(this.$parent.yyy)
+                },
+
+            }
+        });
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                msg: '父组件信息'
+            },
+            methods: {
+
+            }
+
+        });
+
+
+    </script>
+</body>
+
+</html>

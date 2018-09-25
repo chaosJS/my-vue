@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>同级组件通信&&父子组件相互使用</title>
+</head>
+<div id="app">
+    <child-comp1></child-comp1>
+    <child-comp2></child-comp2>
+    <button @click="getChildren" ref="c">父组件拿子组件的内容</button>
+
+</div>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script>
+        Vue.component('child-comp1', {
+            template: `
+            <div>
+                <button @click="plus">触发</button>
+            </div>
+            `,
+            data: function () {
+                return {
+                    count: 2000,
+                    msg: '组件1'
+                }
+            },
+            methods: {
+                plus: function () {
+                    this.$root.eventHub.$emit('xxx', this.count, this.$parent.yyy);
+                    console.log(this.$parent.yyy)
+                },
+
+            }
+        });
+        Vue.component('child-comp2', {
+            template: `
+            <div>
+               {{msg}}
+            </div>
+            `,
+            data: function () {
+                return {
+                    msg: '组件2'
+                }
+            },
+            created: function () {
+                this.$root.eventHub.$on('xxx', (value, pData) => {
+                    alert(value + pData);
+                    alert(pData === this.$parent.yyy);//true
+                })
+            }
+        })
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                yyy: 'ssssssssssss',
+                eventHub: new Vue(),
+            },
+            methods: {
+                getChildren: function () {
+                    console.log('this.$children:::', this.$children);
+                    console.log('this.$refs.c', this.$refs.c);
+
+                }
+            }
+
+        });
+
+
+    </script>
+</body>
+
+</html>
