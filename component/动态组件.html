@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动态组件</title>
+</head>
+
+<body>
+
+    <div id="watch-example">
+        <component :is="tab"></component>
+        <button @click="changeTab('A')">aaa</button>
+        <button @click="changeTab('B')">bbb</button>
+        <button @click="changeTab('C')">ccc</button>
+        <button @click="changeTab('D')">ddd</button>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script>
+        Vue.component(
+            'compA', { template: `<div>tabAAA</div>` }
+        );
+        Vue.component(
+            'compB', { template: `<div>tabBBB</div>` }
+        ); Vue.component(
+            'compC', { template: `<div>tabCCC</div>` }
+        ); Vue.component(
+            'compD', { template: `<div>tabDDD</div>` }
+        );
+        var watchExampleVM = new Vue({
+            el: '#watch-example',
+            data: {
+                tab: 'compA'
+            },
+            methods: {
+                changeTab: function (value) {
+                    this.tab = 'comp' + value;
+                }
+            }
+
+        })
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

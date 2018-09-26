@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>作用域插槽,访问插槽</title>
+</head>
+<div id="app">
+    <h2>父组件能接收来自子组件的slot传递过来的参数</h2>
+    <child-comp>
+        <!-- <template slot="abc" slot-scope="a">
+            {{a.text}}
+        </template> -->
+
+        <p slot="abc" slot-scope="a">
+            {{a.text}}
+        </p>
+    </child-comp>
+    <hr>
+    <h3>访问插槽：this.$slots</h3>
+    <blog-post>
+        <h5 slot="header">
+            About Me
+        </h5>
+
+        <p>Here's some page content, which will be included in vm.$slots.default, because it's not inside a named slot.</p>
+
+        <p slot="footer">
+            Copyright 2016 Evan You
+        </p>
+
+        <p>If I have some content down here, it will also be included in vm.$slots.default.</p>.
+    </blog-post>
+</div>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script>
+
+        Vue.component('blog-post', {
+            render: function (createElement) {
+                var header = this.$slots.header
+                var body = this.$slots.default
+                var footer = this.$slots.footer
+                return createElement('div', [
+                    createElement('header', header),
+                    createElement('main', body),
+                    createElement('footer', footer)
+                ])
+            }
+        })
+        Vue.component('child-comp', {
+            template: `
+            <div>
+                <slot text="子组件数据" name="abc">
+                  
+                </slot>
+            </div>
+            `,
+            data: function () {
+                return {
+
+                }
+            },
+            mounted: function () {
+                let aa = this.$slots.abc;
+                console.log(aa)
+
+            },
+            methods: {
+
+            }
+        });
+        var app = new Vue({
+            el: '#app',
+            data: {
+                msg: '父组件信息'
+            },
+            methods: {
+
+            }
+
+        });
+
+
+    </script>
+</body>
+
+</html>
