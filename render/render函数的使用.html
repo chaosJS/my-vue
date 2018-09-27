@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>render函数的使用</title>
+</head>
+
+<body>
+    <div id="app">
+        <child-comp>
+            <p>paragraphs11</p>
+            <p slot="footer">footer</p>
+            <p>paragraphs22</p>
+            <h2 slot="title">title</h2>
+        </child-comp>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script>
+        Vue.component('child-comp', {
+            render: function (creatEle, ) {
+                //slot的使用
+                let titleSlot = this.$slots.title;
+                let mainSlot = this.$slots.default;
+                let footerSlot = this.$slots.footer;
+
+                return creatEle(
+                    //1. string:div  , 
+                    'div',
+                    //第二个参数是数据对象
+                    {
+                        class: {
+                            foo: true,
+                            bar: false
+                        },
+                        style: {
+                            fontSize: '18px'
+                        },
+                        attrs: {
+                            id: 'xxx',
+                            src: '//baidu.com'
+                        },
+                        // domProps: {
+                        //     innerHTML: `<span> lorem</span>`
+                        // }
+                    },
+                    //第三个参数：String array 代表子节点   
+                    [
+                        // creatEle('h2', 'title'),
+                        // creatEle('p', 'desc content')
+
+                        creatEle('header', titleSlot),
+                        creatEle('main', mainSlot),
+                        creatEle('footer', footerSlot)
+
+                    ]
+                )
+                // return creatEle(
+                //     //2. obj
+                //     { template: `<div>锄禾日当午</div>` }
+                // )
+                // let creatDomFunc = function () {
+                //     return {
+                //         template: `<div>锄禾日当午111</div>`
+                //     }
+                // }
+                // return creatEle(
+                //     //3. func
+                //     creatDomFunc()
+                // )
+            }
+        })
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            methods: {
+
+            },
+        });
+
+
+    </script>
+</body>
+
+</html>
