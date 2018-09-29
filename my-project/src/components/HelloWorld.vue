@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    
+    <p>{{getNum}}</p>
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <h3>{{$route.params.yyy}}</h3>
@@ -93,6 +93,11 @@ export default {
     return {
       msg: "Welcome to Your Vue.js App"
     };
+  },
+  computed: {
+    getNum: function() {
+      return this.$store.state.num;
+    }
   }
 };
 </script>

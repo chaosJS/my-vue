@@ -1,8 +1,11 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <p>{{getNum}}</p>
     <button @click="getData"> 点击get请求</button>
     <button @click="postData"> 点击post请求</button>
+    <button @click="addOne"> 改变store的state 加1</button>
+    <button @click="minusOne"> action改变store的state 减20</button>
 
     <ul>
       <li v-for="(item,index) in items" :key="index">
@@ -21,7 +24,19 @@ export default {
       items: []
     };
   },
+  computed: {
+    getNum: function() {
+      // return this.$store.state.num;
+      return this.$store.getters.getNum;
+    }
+  },
   methods: {
+    minusOne() {
+      this.$store.dispatch("actionMinus");
+    },
+    addOne() {
+      this.$store.commit("plus");
+    },
     getData() {
       this.$axios
         .get("https://cnodejs.org/api/v1/topics", {
